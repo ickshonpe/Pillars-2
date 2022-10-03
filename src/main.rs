@@ -21,8 +21,8 @@ use std::{env, path};
 
 use ggez::*;
 
-fn main() -> GameResult {       
-    let (context, event_loop) = &mut {
+fn main() -> GameResult {
+    let (mut context, event_loop) = {
         let window_setup = ggez::conf::WindowSetup {
             title: "Pillars".to_owned(),
             vsync: true,
@@ -34,8 +34,8 @@ fn main() -> GameResult {
             ..Default::default()
         };
         let context_builder = ContextBuilder::new("Pillars", ":/")
-        .window_mode(window_mode)
-        .window_setup(window_setup);
+            .window_mode(window_mode)
+            .window_setup(window_setup);
         if let Ok(manifest_dir) = env::var("CARGO_MANIFEST_DIR") {
             let resource_path = path::PathBuf::from(manifest_dir).join("resources");
             context_builder.add_resource_path(resource_path)
@@ -44,7 +44,7 @@ fn main() -> GameResult {
         }
         .build()?
     };
-    
-    let event_handler = &mut game_loop::GameLoop::new(context)?;
+
+    let event_handler = game_loop::GameLoop::new(&mut context)?;
     event::run(context, event_loop, event_handler)
 }

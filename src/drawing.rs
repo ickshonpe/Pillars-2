@@ -1,17 +1,14 @@
 use ggez::{
     graphics::{
         self, spritebatch::SpriteBatch, Color, DrawMode, Drawable, Image, MeshBuilder, Rect,
-        StrokeOptions, Text, WHITE,
+        StrokeOptions, Text,
     },
     Context, GameResult,
 };
 use glam::{vec2, vec4, Vec2};
 
 use crate::{
-    assets::Assets,
-    board::Board,
-    game_loop::CommonState,
-    helpful_things::{Center, HalfSizeCtx},
+    assets::Assets, board::Board, game_loop::CommonState, helpful_things::HalfSizeCtx,
     pillar::Pillar,
 };
 
@@ -88,8 +85,8 @@ pub fn draw_borders(ctx: &mut Context, plans: DrawingPlans, thickness: f32) -> G
     let spawn_lines = expand_rect(plans.spawn_rect, m);
     let stroke_options = StrokeOptions::default().with_line_width(thickness);
     let mut primitives_mesh_builder = MeshBuilder::new();
-    primitives_mesh_builder.rectangle(DrawMode::Stroke(stroke_options), life_lines, BLUE);
-    primitives_mesh_builder.rectangle(DrawMode::Stroke(stroke_options), spawn_lines, RED);
+    primitives_mesh_builder.rectangle(DrawMode::Stroke(stroke_options), life_lines, BLUE)?;
+    primitives_mesh_builder.rectangle(DrawMode::Stroke(stroke_options), spawn_lines, RED)?;
     let mesh = primitives_mesh_builder.build(ctx)?;
     graphics::draw(ctx, &mesh, (plans.board_pos,))?;
     Ok(())
@@ -202,7 +199,7 @@ pub fn draw_game_play(
             assets.block_image.clone(),
             matches,
             s,
-            WHITE,
+            Color::WHITE,
         );
         graphics::draw(ctx, d, (plans.board_pos,))?;
     } else {
@@ -216,7 +213,7 @@ pub fn draw_game_play(
     let level_message = graphics::Text::new((format!("level {}", common.level), assets.font, 25.0));
     let target = vec2(
         graphics::screen_coordinates(ctx).center().x - level_message.half_sz(ctx).x,
-        plans.board_pos.y + plans.board_rect.bottom() as f32 + 15.0
+        plans.board_pos.y + plans.board_rect.bottom() as f32 + 15.0,
     );
     graphics::draw(ctx, &level_message, (target,))?;
     Ok(())

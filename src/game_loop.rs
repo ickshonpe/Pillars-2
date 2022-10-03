@@ -185,10 +185,10 @@ impl EventHandler for GameLoop {
                     puff.radius,
                     0.1,
                     puff.color,
-                );
+                )?;
             }
             let mesh = primitives_mesh_builder.build(ctx)?;
-            graphics::draw(ctx, &mesh, (Vec2::zero(),))?;
+            graphics::draw(ctx, &mesh, (Vec2::ZERO,))?;
         }
 
         let score_text =
@@ -201,8 +201,8 @@ impl EventHandler for GameLoop {
             graphics::screen_coordinates(ctx).right(),
             graphics::screen_coordinates(ctx).top(),
         );
-        let target = top_right + vec2(-margin.x, margin.y)
-            - high_score_text.width(ctx) as f32 * Vec2::unit_x();
+        let target =
+            top_right + vec2(-margin.x, margin.y) - high_score_text.width(ctx) as f32 * Vec2::X;
         graphics::draw(ctx, &high_score_text, (target,))?;
 
         graphics::present(ctx)?;
@@ -263,9 +263,7 @@ impl EventHandler for GameLoop {
         let dead_zone = 0.25;
         if dead_zone < value.abs() {
             match axis {
-                event::Axis::LeftStickX => {
-                    
-                }
+                event::Axis::LeftStickX => {}
                 event::Axis::LeftStickY => {}
                 _ => {}
             }

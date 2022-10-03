@@ -1,4 +1,8 @@
-use ggez::{GameResult, audio::{SoundSource, Source}, graphics::Color};
+use ggez::{
+    audio::{SoundSource, Source},
+    graphics::Color,
+    GameResult,
+};
 use glam::vec2;
 
 use crate::input::*;
@@ -33,10 +37,9 @@ impl GameState for MatchingBlocks {
         let t = time_delta(ctx);
         if self.timer.update(t) {
             if !self.current_matches.is_empty() {
-                    let mut sound = Source::from_data(ctx, assets.score_sound.clone()).unwrap();
-                    sound.set_repeat(false);                    
-                    sound.play().unwrap();
-
+                let mut sound = Source::from_data(ctx, assets.score_sound.clone()).unwrap();
+                sound.set_repeat(false);
+                sound.play(&ctx).unwrap();
             }
             let tile_sz = vec2(
                 assets.block_image.dimensions().w,

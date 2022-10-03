@@ -6,17 +6,21 @@ use std::{collections::HashMap, collections::HashSet, hash::Hash};
 
 #[derive(Clone, Debug)]
 pub struct InputData<C>
-where C: Clone + Copy + Eq + Hash {
+where
+    C: Clone + Copy + Eq + Hash,
+{
     buttons: HashSet<C>,
-    left_axis: Vec2
+    left_axis: Vec2,
 }
 
-impl <C> InputData<C> 
-where C: Clone + Copy + Eq + Hash {
+impl<C> InputData<C>
+where
+    C: Clone + Copy + Eq + Hash,
+{
     pub fn new() -> Self {
         Self {
             buttons: HashSet::new(),
-            left_axis: Vec2::zero()
+            left_axis: Vec2::ZERO,
         }
     }
 
@@ -29,7 +33,7 @@ where C: Clone + Copy + Eq + Hash {
     }
 
     pub fn contains(&self, command: C) -> bool {
-        self.buttons.contains(&command) 
+        self.buttons.contains(&command)
     }
 
     pub fn get_stick(&self) -> Vec2 {
@@ -37,15 +41,14 @@ where C: Clone + Copy + Eq + Hash {
     }
 }
 
-
 pub struct InputState<I, C>
 where
     I: Eq + Hash,
-    C: Clone + Copy + Eq +  Hash,
+    C: Clone + Copy + Eq + Hash,
 {
     input_cfg: HashMap<I, C>,
     current: InputData<C>,
-    previous: InputData<C>
+    previous: InputData<C>,
 }
 
 impl<I, C> InputState<I, C>

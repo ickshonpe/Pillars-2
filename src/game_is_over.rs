@@ -1,5 +1,5 @@
 use ggez::{
-    graphics::{self, Color, DrawMode, WHITE},
+    graphics::{self, Color, DrawMode},
     GameResult,
 };
 use glam::{vec2, Vec2};
@@ -10,7 +10,7 @@ use crate::{
     assets::Assets,
     drawing::{draw_centered_text, draw_game_play, lerp_color, RED, YELLOW},
     game_loop::{CommonState, GameState},
-    helpful_things::{time_delta, Center},
+    helpful_things::time_delta,
     scoring::{save_high_score_table, HighScore, HIGH_SCORE_PATH},
     timer::Timer,
     title_screen::TitleScreen,
@@ -115,9 +115,9 @@ impl GameState for GameIsOver {
         draw_game_play(ctx, assets, &self.common, None, None)?;
         let rect = graphics::screen_coordinates(ctx);
         let mesh = MeshBuilder::new()
-            .rectangle(DrawMode::fill(), rect, Color::new(0., 0., 0., self.fade))
+            .rectangle(DrawMode::fill(), rect, Color::new(0., 0., 0., self.fade))?
             .build(ctx)?;
-        graphics::draw(ctx, &mesh, (Vec2::zero(),))?;
+        graphics::draw(ctx, &mesh, (Vec2::ZERO,))?;
         let game_over_message = graphics::Text::new(("GAME OVER", assets.font, 36.0));
 
         let y = graphics::screen_coordinates(ctx).center().y - 200.0;
@@ -126,14 +126,14 @@ impl GameState for GameIsOver {
             &game_over_message,
             y,
             lerp_color(
-                WHITE,
+                Color::WHITE,
                 RED,
                 ggez::timer::time_since_start(ctx).as_secs_f32().sin().abs(),
             ),
         )?;
         let y = y + 100.0;
         let rank_msg = graphics::Text::new((format!("rank #{}", self.rank), assets.font, 36.));
-        draw_centered_text(ctx, &rank_msg, y, WHITE)?;
+        draw_centered_text(ctx, &rank_msg, y, Color::WHITE)?;
 
         let chars: Vec<char> = ('a'..='z').collect();
         let t = ggez::timer::time_since_start(ctx).as_secs_f32();
@@ -148,9 +148,9 @@ impl GameState for GameIsOver {
                     chars[c - 1].to_string()
                 };
                 let c = if i == self.cursor {
-                    lerp_color(WHITE, YELLOW, 3.0 * t.sin().abs())
+                    lerp_color(Color::WHITE, YELLOW, 3.0 * t.sin().abs())
                 } else {
-                    WHITE
+                    Color::WHITE
                 };
                 let f = TextFragment::from((s, assets.font, 36.0)).color(c);
                 graphics::Text::new(f)

@@ -1,6 +1,9 @@
 use std::time::Duration;
 
-use ggez::{GameResult, audio::{SoundSource, Source}};
+use ggez::{
+    audio::{SoundSource, Source},
+    GameResult,
+};
 
 use crate::input::*;
 use crate::{
@@ -37,7 +40,6 @@ impl GameState for ExplodingBlocks {
                         .into_iter()
                         .collect();
                 if !current_matches.is_empty() {
-                    
                     let next_state = MatchingBlocks {
                         common: self.common,
                         timer: Timer::new(4f32.recip()),
@@ -53,7 +55,7 @@ impl GameState for ExplodingBlocks {
                 if is_game_over(&self.common.board, self.common.rules.pillar_sz) {
                     let mut sound = Source::from_data(ctx, assets.game_over_sound.clone()).unwrap();
                     sound.set_fade_in(Duration::from_millis(400));
-                    sound.play_detached().unwrap();
+                    sound.play_detached(&ctx).unwrap();
                     let next_state = GameIsOver::new(self.common, assets, commands.get_score());
                     return Some(Box::new(next_state));
                 } else {

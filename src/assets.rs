@@ -1,6 +1,6 @@
-use std::{cell::RefCell, collections::HashMap};
+use std::cell::RefCell;
 
-use ggez::{Context, GameResult, audio::{SoundData, Source}, graphics};
+use ggez::{audio::SoundData, graphics, Context, GameResult};
 use glam::{vec2, Vec2};
 use rand::{prelude::StdRng, SeedableRng};
 
@@ -14,7 +14,7 @@ pub struct Assets {
     pub tile_sz: Vec2,
     pub game_over_sound: ggez::audio::SoundData,
     pub thud_sound: ggez::audio::SoundData,
-    pub score_sound: ggez::audio::SoundData
+    pub score_sound: ggez::audio::SoundData,
 }
 
 impl Assets {
@@ -27,11 +27,12 @@ impl Assets {
             high_score_table: RefCell::new(high_scores),
             rng: RefCell::new(StdRng::from_entropy()),
             tile_sz: vec2(32.0, 32.0),
-            game_over_sound: ggez::audio::SoundData::new(ctx, "/mixkit-player-losing-or-failing-2042.wav")?,
+            game_over_sound: ggez::audio::SoundData::new(
+                ctx,
+                "/mixkit-player-losing-or-failing-2042.wav",
+            )?,
             score_sound: SoundData::new(ctx, "/mixkit-winning-a-coin-video-game-2069.wav")?,
-            thud_sound: SoundData::new(ctx, "/mixkit-electronic-retro-block-hit-2185.wav")?
-            
+            thud_sound: SoundData::new(ctx, "/mixkit-electronic-retro-block-hit-2185.wav")?,
         })
     }
 }
-

@@ -30,12 +30,12 @@ where
     let n = 10;
     let max_r = 10.0;
     for _ in 0..n {
-        let r = rng.gen_range(0.0, max_r);
+        let r = rng.gen_range(0.0..max_r);
         let d = random_dir(rng);
         let pos = ctr + r * d;
-        let vel = rng.gen_range(5.0, 30.0) * d;
-        let rad = rng.gen_range(1.0, 5.0) + (16. - r).log2();
-        let expand_rate = rng.gen_range(1.0, 30.0);
+        let vel = rng.gen_range(5.0..30.0) * d;
+        let rad = rng.gen_range(1.0..5.0) + (16. - r).log2();
+        let expand_rate = rng.gen_range(1.0..30.0);
         let fade_rate = r / 30.0 + 1.3;
         let life_time = 1.0;
         let puff = Puff {
@@ -59,12 +59,12 @@ where
     let n = 10;
     let max_r = 10.0;
     for _ in 0..n {
-        let r = rng.gen_range(0.0, max_r);
+        let r = rng.gen_range(0.0..max_r);
         let d = random_dir(rng);
         let pos = ctr + r * d;
-        let vel = rng.gen_range(5.0, 30.0) * d;
-        let rad = rng.gen_range(1.0, 5.0) + (16. - r).log2();
-        let expand_rate = rng.gen_range(1.0, 30.0);
+        let vel = rng.gen_range(5.0..30.0) * d;
+        let rad = rng.gen_range(1.0..5.0) + (16. - r).log2();
+        let expand_rate = rng.gen_range(1.0..30.0);
         let fade_rate = r / 30.0 + 1.3;
         let life_time = 1.0;
         let puff = Puff {

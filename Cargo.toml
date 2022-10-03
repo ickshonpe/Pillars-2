@@ -4,11 +4,11 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-ggez = "*"
-rand = "*"
-maplit = "*"
-num-derive = "*"
-num-traits = "*"
-glam = { version = "*", features = ["mint"] }
-serde = { version = "*", features = ["derive"] }
-ron = "*"
+ggez = "0.7"
+rand = "0.8"
+maplit = "1.0.2"
+num-derive = "0.3"
+num-traits = "0.2"
+glam = { version = "0.21.3", features = ["mint"] }
+serde = { version = "1.0.145", features = ["derive"] }
+ron = "0.8"

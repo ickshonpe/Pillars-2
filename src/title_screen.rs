@@ -1,8 +1,5 @@
-use ggez::{
-    event,
-    graphics::{self, WHITE},
-    GameResult,
-};
+use ggez::graphics::Color;
+use ggez::{event, graphics, GameResult};
 
 use crate::{assets::Assets, the_rules::GameRules};
 use crate::{
@@ -44,26 +41,26 @@ impl GameState for TitleScreen {
     fn draw(&self, ctx: &mut ggez::Context, assets: &Assets) -> GameResult {
         let mut cursor_y = 100.0;
         let title_message = graphics::Text::new(("Pillars", assets.font, 40.0));
-        draw_centered_text(ctx, &title_message, cursor_y, WHITE)?;
+        draw_centered_text(ctx, &title_message, cursor_y, Color::WHITE)?;
 
         cursor_y += 60.0;
         let scores = assets.high_score_table.borrow();
 
-        for (idx, score) in scores.list().iter().take(10).enumerate() {
+        for score in scores.list().iter().take(10) {
             let score_text = graphics::Text::new((
                 format!("{:>2}. {} {:>8}", score.level, score.handle, score.score),
                 assets.font,
                 25.0,
             ));
 
-            draw_centered_text(ctx, &score_text, cursor_y, WHITE)?;
+            draw_centered_text(ctx, &score_text, cursor_y, Color::WHITE)?;
             cursor_y += 20.0;
         }
 
         let begin_text = graphics::Text::new(("press start", assets.font, 30.0));
         let y_begin = graphics::screen_coordinates(ctx).bottom() - 60.0;
         let begin_color = lerp_color(
-            WHITE,
+            Color::WHITE,
             YELLOW,
             ggez::timer::time_since_start(ctx).as_secs_f32().sin().abs(),
         );

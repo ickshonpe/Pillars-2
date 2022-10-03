@@ -12,7 +12,7 @@ pub struct GameRules {
     pub fall_rate_increment: f32,
     pub max_fall_rate: f32,
     pub rot_cooldown: f32,
-    pub horizontal_move_cooldown: f32
+    pub horizontal_move_cooldown: f32,
 }
 
 impl Default for GameRules {
@@ -33,7 +33,6 @@ impl Default for GameRules {
             max_fall_rate: 25.0,
             rot_cooldown: 0.15,
             horizontal_move_cooldown: 0.1,
-            
         }
     }
 }

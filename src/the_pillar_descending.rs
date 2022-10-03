@@ -1,16 +1,16 @@
 use crate::{
-    board::{find_matches, is_game_over, write_pillar, Board, BoardCell},
+    board::{Board, BoardCell},
     drawing::draw_game_play,
-    game_is_over::GameIsOver,
     input::PlayerCommand,
-    matching_blocks::MatchingBlocks,
     pillar::Pillar,
-    scoring::HighScore,
     the_pillar_has_landed::ThePillarHasLanded,
     the_rules::GameRules,
     timer::Timer,
 };
-use ggez::{Context, GameResult, audio::{SoundSource, Source}};
+use ggez::{
+    audio::{SoundSource, Source},
+    Context, GameResult,
+};
 
 use crate::assets::Assets;
 use crate::game_loop::*;
@@ -159,8 +159,8 @@ impl GameState for ThePillarIsFalling {
             self.pillar_pos.y = next_pillar_y;
         } else {
             let mut sound = Source::from_data(ctx, assets.thud_sound.clone()).unwrap();
-            sound.set_repeat(false);                    
-            sound.play().unwrap();
+            sound.set_repeat(false);
+            sound.play(&ctx).unwrap();
             self.pillar_pos.y = self.pillar_pos.y.ceil() - 0.0001;
             let next = ThePillarHasLanded {
                 common: self.common,

@@ -1,7 +1,3 @@
-use std::time::Duration;
-
-use ggez::{GameResult, audio::{SoundSource, Source}};
-
 use crate::{
     board::{find_matches, is_game_over, write_pillar},
     drawing::draw_game_play,
@@ -13,6 +9,10 @@ use crate::{
     pillar::Pillar,
     the_pillar_descending::ThePillarIsFalling,
     timer::Timer,
+};
+use ggez::{
+    audio::{SoundSource, Source},
+    GameResult,
 };
 
 pub struct ThePillarHasLanded {
@@ -65,7 +65,6 @@ impl GameState for ThePillarHasLanded {
                     .collect();
 
             if !current_matches.is_empty() {
-                
                 let next_state = MatchingBlocks {
                     common: self.common,
                     match_count: 0,
@@ -76,8 +75,8 @@ impl GameState for ThePillarHasLanded {
                 return Some(Box::new(next_state));
             } else if is_game_over(&self.common.board, self.common.rules.pillar_sz) {
                 let mut sound = Source::from_data(ctx, assets.game_over_sound.clone()).unwrap();
-                sound.set_repeat(false);                    
-                    sound.play().unwrap();
+                sound.set_repeat(false);
+                sound.play(&ctx).unwrap();
                 let next_state = GameIsOver::new(self.common, assets, commands.get_score());
                 return Some(Box::new(next_state));
             } else {

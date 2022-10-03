@@ -1,4 +1,4 @@
-use ggez::graphics::{Color, WHITE};
+use ggez::graphics::Color;
 use glam::{vec2, Vec2};
 use rand::Rng;
 
@@ -37,7 +37,7 @@ impl Block {
             Self::Yellow => Color::from_rgb_u32(0xFFFD40),
             Self::Cyan => Color::from_rgb_u32(0x85E3FF),
             Self::Violet => rgb(0.5, 0.1, 0.9),
-            Self::White => WHITE,
+            Self::White => Color::WHITE,
             Self::Black => rgb(0.4, 0.3, 0.3),
         }
     }
@@ -56,7 +56,7 @@ impl Palette {
     }
 
     pub fn get_random<R: Rng>(&self, rng: &mut R) -> Block {
-        let idx = rng.gen_range(0, self.blocks.len());
+        let idx = rng.gen_range(0..self.blocks.len());
         self.blocks[idx]
     }
 

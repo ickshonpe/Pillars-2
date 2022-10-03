@@ -21,7 +21,7 @@ impl Center for graphics::Rect {
 impl HalfSizeCtx for graphics::Text {
     fn half_sz(&self, ctx: &mut Context) -> Vec2 {
         let dim = self.dimensions(ctx);
-        0.5 * vec2(dim.0 as f32, dim.1 as f32)
+        0.5 * vec2(dim.w as f32, dim.h as f32)
     }
 }
 
@@ -60,17 +60,17 @@ pub fn random_vector<R>(rng: &mut R, low: f32, high: f32) -> Vec2
 where
     R: Rng,
 {
-    let angle = rng.gen_range(0.0, std::f32::consts::TAU);
+    let angle = rng.gen_range(0.0..std::f32::consts::TAU);
     let m = Mat2::from_angle(angle);
-    let _l = rng.gen_range(low, high);
-    m * Vec2::unit_x()
+    let _l = rng.gen_range(low..high);
+    m * Vec2::X
 }
 
 pub fn random_dir<R>(rng: &mut R) -> Vec2
 where
     R: Rng,
 {
-    let angle = rng.gen_range(0.0, std::f32::consts::TAU);
+    let angle = rng.gen_range(0.0..std::f32::consts::TAU);
     let m = Mat2::from_angle(angle);
-    m * Vec2::unit_x()
+    m * Vec2::X
 }
